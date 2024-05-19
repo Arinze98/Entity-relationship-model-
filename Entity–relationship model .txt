@@ -1,0 +1,95 @@
+To create an Entity-Relationship Diagram (ERD) based on the provided information, we need to identify the main entities, their attributes, and the relationships between them. Here is a breakdown of the entities and their attributes:
+
+### Entities and Attributes
+
+1. **Gymnasium**
+   - **Attributes**: GymID (Primary Key), Name, Address, PhoneNumber
+
+2. **Member**
+   - **Attributes**: MemberID (Primary Key), LastName, FirstName, Address, DateOfBirth, Gender, GymID (Foreign Key)
+
+3. **Session**
+   - **Attributes**: SessionID (Primary Key), SportType, Schedule, MaxMembers (fixed at 20), GymID (Foreign Key)
+
+4. **Coach**
+   - **Attributes**: CoachID (Primary Key), LastName, FirstName, Age, Specialty
+
+5. **Registration**
+   - **Attributes**: RegistrationID (Primary Key), MemberID (Foreign Key), SessionID (Foreign Key)
+
+6. **Session_Coach**
+   - **Attributes**: SessionID (Foreign Key), CoachID (Foreign Key)
+
+### Relationships
+- A **Gymnasium** can have multiple **Members** (One-to-Many)
+- A **Gymnasium** can have multiple **Sessions** (One-to-Many)
+- A **Session** can have up to 20 **Members** registered (Many-to-Many, managed via **Registration**)
+- A **Session** can have up to two **Coaches** (Many-to-Many, managed via **Session_Coach**)
+- A **Coach** can be assigned to multiple **Sessions** (Many-to-Many, managed via **Session_Coach**)
+
+### Entity-Relationship Diagram (ERD)
+
+Here is a textual description of the ERD, as the ERD would ideally be visually represented:
+
+#### Gymnasium
+- **GymID** (PK)
+- Name
+- Address
+- PhoneNumber
+
+#### Member
+- **MemberID** (PK)
+- LastName
+- FirstName
+- Address
+- DateOfBirth
+- Gender
+- **GymID** (FK)
+
+#### Session
+- **SessionID** (PK)
+- SportType
+- Schedule
+- MaxMembers
+- **GymID** (FK)
+
+#### Coach
+- **CoachID** (PK)
+- LastName
+- FirstName
+- Age
+- Specialty
+
+#### Registration
+- **RegistrationID** (PK)
+- **MemberID** (FK)
+- **SessionID** (FK)
+
+#### Session_Coach
+- **SessionID** (FK)
+- **CoachID** (FK)
+
+### Diagram Representation
+
+1. **Gymnasium** (1) --- (N) **Member**
+   - GymID (PK) 1 -- N MemberID (FK)
+
+2. **Gymnasium** (1) --- (N) **Session**
+   - GymID (PK) 1 -- N GymID (FK)
+
+3. **Member** (N) --- (M) **Session** (through **Registration**)
+   - MemberID (PK) N -- M MemberID (FK)
+   - SessionID (PK) N -- M SessionID (FK)
+
+4. **Session** (1) --- (2) **Coach** (through **Session_Coach**)
+   - SessionID (PK) 1 -- 2 SessionID (FK)
+   - CoachID (PK) 1 -- 2 CoachID (FK)
+
+### Explanation of the Diagram
+
+1. **Gymnasium** to **Member**: Each gymnasium can have multiple members. Members are associated with a single gymnasium.
+2. **Gymnasium** to **Session**: Each gymnasium can offer multiple sessions. Sessions are specific to a single gymnasium.
+3. **Member** to **Session**: Members can register for multiple sessions. Each session can have multiple members, up to a maximum of 20. This many-to-many relationship is managed through the **Registration** entity.
+4. **Session** to **Coach**: Each session can have up to two coaches, and each coach can lead multiple sessions. This many-to-many relationship is managed through the **Session_Coach** entity.
+
+By setting up the database in this way, the gym can efficiently manage memberships, sessions, and coaching assignments, thus avoiding the issues currently faced with manual card management.
